@@ -76,13 +76,13 @@ function createApp(database) {
 
   function calculateReduction(date, temporalDate) {
     let reduction = 0;
-    if (date && temporalDate && isMonday(date, temporalDate) && !isHoliday(temporalDate)) {
+    if (date && temporalDate && isMonday(temporalDate) && !isHoliday(temporalDate)) {
       reduction = 35;
     }
     return reduction;
   }
 
-  function isMonday(date, temporalDate) {
+  function isMonday(temporalDate) {
     return temporalDate.dayOfWeek === 1;
   }
 
