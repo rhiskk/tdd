@@ -31,6 +31,7 @@ function createApp(database) {
 
   function convert(date) {    
     if (date instanceof Date) {
+      return date.toTemporalInstant().toZonedDateTimeISO("UTC").toPlainDate();
     }
   }
 
