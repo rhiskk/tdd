@@ -40,8 +40,12 @@ export class Board {
     this.fallingBlock = block;
   }
 
+  blockUnderIsEmpty(block) {
+    return this.blockAt(block.row + 1, block.column) === ".";
+  }
+
   tick() {
-    if (this.fallingBlock.row === this.height - 1) {
+    if (this.fallingBlock.row === this.height - 1 || !this.blockUnderIsEmpty(this.fallingBlock)) {
       this.stationaryBlocks[this.fallingBlock.row][this.fallingBlock.column] = this.fallingBlock.color;
       this.fallingBlock = null;
     } else {
