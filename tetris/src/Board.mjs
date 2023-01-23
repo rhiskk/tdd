@@ -40,14 +40,22 @@ export class Board {
     this.fallingBlock = block;
   }
 
-  blockUnderIsEmpty(block) {
-    return this.blockAt(block.row + 1, block.column) === ".";
+  blockHitsAnotherBlock() {
+    return this.blockAt(this.fallingBlock.row + 1, this.fallingBlock.column) !== ".";
+  }
+
+  blockHitsFloor() {
+    return this.fallingBlock.row === this.height - 1;
+  }
+
+  stopFalling() {
+    this.stationaryBlocks[this.fallingBlock.row][this.fallingBlock.column] = this.fallingBlock.color;
+    this.fallingBlock = null;
   }
 
   tick() {
-    if (this.fallingBlock.row === this.height - 1 || !this.blockUnderIsEmpty(this.fallingBlock)) {
-      this.stationaryBlocks[this.fallingBlock.row][this.fallingBlock.column] = this.fallingBlock.color;
-      this.fallingBlock = null;
+    if (this.blockHitsFloor() || this.blockHitsAnotherBlock()) {
+      this.stopFalling();
     } else {
       this.fallingBlock.tick();
     }
