@@ -1,10 +1,12 @@
 export class Board {
   width;
   height;
+  block;
 
   constructor(width, height) {
     this.width = width;
     this.height = height;
+    this.block = null
   }
 
   toString() {
@@ -31,6 +33,10 @@ export class Board {
 
   tick() {
     this.block.tick();
+  }
+
+  hasFalling() {
+    return this.block !== null;
   }
 
 }
