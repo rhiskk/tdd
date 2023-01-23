@@ -11,7 +11,7 @@ export class Board {
     let board = "";
     for (let i = 0; i < this.height; i++) {
       for (let j = 0; j < this.width; j++) {
-        if (this.block && i === 0 && j === 1) {
+        if (this.block && i === this.block.row && j === this.block.column) {
           board += this.block.color;
         } else {
         board += ".";
@@ -24,6 +24,10 @@ export class Board {
 
   drop(block) {
     this.block = block;
+  }
+
+  tick() {
+    this.block.tick();
   }
 
 }
