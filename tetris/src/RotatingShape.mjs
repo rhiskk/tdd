@@ -19,4 +19,14 @@ export class RotatingShape {
     return new RotatingShape(rotated);
   }
 
+  rotateLeft() {
+    const rows = this.shape.split("\n");
+    const columns = rows[0];
+    const rotated = columns.split("").map((_, column) => {
+      return rows.map(row => row[column]).join("");
+    }).reverse().join("\n");
+
+    return new RotatingShape(rotated);
+  }
+
 }
