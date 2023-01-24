@@ -13,7 +13,7 @@ describe("Rotating 3x3 shape", () => {
        GHI`
     );
   });
-  xit("can be rotated right/clockwise", () => {
+  it("can be rotated right/clockwise", () => {
     expect(shape.rotateRight().toString()).to.equalShape(
       `GDA
        HEB
