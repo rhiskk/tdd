@@ -1,14 +1,11 @@
-/*
 import { expect } from "chai";
 import { RotatingShape } from "../src/RotatingShape.mjs";
-
 describe("Rotating 3x3 shape", () => {
   const shape = new RotatingShape(
     `ABC
      DEF
      GHI`
   );
-
   it("initial orientation", () => {
     expect(shape.toString()).to.equalShape(
       `ABC
@@ -16,7 +13,6 @@ describe("Rotating 3x3 shape", () => {
        GHI`
     );
   });
-
   xit("can be rotated right/clockwise", () => {
     expect(shape.rotateRight().toString()).to.equalShape(
       `GDA
@@ -24,7 +20,6 @@ describe("Rotating 3x3 shape", () => {
        IFC`
     );
   });
-
   xit("can be rotated left/counter-clockwise", () => {
     expect(shape.rotateLeft().toString()).to.equalShape(
       `CFI
@@ -33,7 +28,7 @@ describe("Rotating 3x3 shape", () => {
     );
   });
 });
-*/
+
 
 /*
 describe("Rotating 5x5 shape", () => {
@@ -44,7 +39,6 @@ describe("Rotating 5x5 shape", () => {
      PQRST
      UVWXY`
   );
-
   it("initial orientation", () => {
     expect(shape.toString()).to.equalShape(
       `ABCDE
@@ -54,7 +48,6 @@ describe("Rotating 5x5 shape", () => {
        UVWXY`
     );
   });
-
   xit("can be rotated right/clockwise", () => {
     expect(shape.rotateRight().toString()).to.equalShape(
       `UPKFA
@@ -64,7 +57,6 @@ describe("Rotating 5x5 shape", () => {
        YTOJE`
     );
   });
-
   xit("can be rotated left/counter-clockwise", () => {
     expect(shape.rotateLeft().toString()).to.equalShape(
       `EJOTY
