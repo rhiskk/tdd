@@ -1,7 +1,6 @@
-export class Tetromino {
+import { RotatingShape } from './RotatingShape.mjs';
 
-  shape;
-
+export class Tetromino extends RotatingShape {
   static get T_SHAPE() {
     return new Tetromino(
       `.T.
@@ -11,11 +10,7 @@ export class Tetromino {
   }
 
   constructor(shape) {
-    this.shape = shape.replace(/^\s+/gm, '');
-  }
-
-  toString() {
-    return this.shape + "\n";
+    super(shape);
   }
 
 }
