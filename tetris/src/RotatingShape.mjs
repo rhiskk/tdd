@@ -1,32 +1,62 @@
-export class RotatingShape {
-  shape;
+import { Grid } from "./Grid.mjs";
+
+export class RotatingShape extends Grid {
+  blocks;
 
   constructor(shape) {
-    this.shape = shape.replace(/^\s+/gm, '');
+    super();
+    if (typeof shape !== "string") {
+      this.blocks = shape;
+    } else {
+      this.blocks = this.toBlocks(shape);
+    }
+  }
+
+  toBlocks(shape) {
+    shape = shape.replace(/^\s+/gm, '');
+    const rows = shape.split("\n");
+    const n = rows.length;
+    const blocks = [];
+    for (let i = 0; i < n; i++) {
+      blocks[i] = [];
+      for (let j = 0; j < n; j++) {
+        blocks[i][j] = rows[i][j];
+      }
+    }
+
+    return blocks;
   }
 
   toString() {
-    return this.shape + "\n";
+    return Grid.prototype.toString.call(this);
   }
 
   rotateRight() {
-    const rows = this.shape.split("\n");
-    const columns = rows[0];
-    const rotated = columns.split("").map((_, column) => {
-      return rows.map(row => row[column]).reverse().join("");
-    }).join("\n");
+    const rotated = this.blocks.map((_, column) => {
+      return this.blocks.map(row => row[column]).reverse();
+    });
 
     return new RotatingShape(rotated);
   }
 
   rotateLeft() {
-    const rows = this.shape.split("\n");
-    const columns = rows[0];
-    const rotated = columns.split("").map((_, column) => {
-      return rows.map(row => row[column]).join("");
-    }).reverse().join("\n");
+    const rotated = this.blocks.map((_, column) => {
+      return this.blocks.map(row => row[column]);
+    }).reverse();
 
     return new RotatingShape(rotated);
   }
+
+  rows() {
+    return this.blocks.length;
+  };
+
+  columns() {
+    return this.blocks[0].length;
+  };
+
+  cellAt(row, column) {
+    return this.blocks[row][column];
+  };
 
 }

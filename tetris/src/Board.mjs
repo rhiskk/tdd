@@ -1,32 +1,21 @@
-export class Board {
+import { Grid } from "./Grid.mjs";
+
+export class Board extends Grid {
   width;
   height;
   fallingBlock;
   stationaryBlocks;
 
   constructor(width, height) {
+    super();
     this.width = width;
     this.height = height;
-    this.fallingBlock = null
+    this.fallingBlock = null;
     this.stationaryBlocks = Array(height).fill().map(() => Array(width).fill("."));
   }
 
   toString() {
-    let board = "";
-    for (let i = 0; i < this.height; i++) {
-      for (let j = 0; j < this.width; j++) {
-        board += this.blockAt(i, j);
-      }
-      board += "\n";
-    }
-    return board;
-  }
-
-  blockAt(row, column) {
-    if (this.hasFallingAt(row, column)) {
-      return this.fallingBlock.color;
-    }
-    return this.stationaryBlocks[row][column];
+    return Grid.prototype.toString.call(this);
   }
 
   hasFallingAt(row, column) {
@@ -41,7 +30,7 @@ export class Board {
   }
 
   blockHitsAnotherBlock() {
-    return this.blockAt(this.fallingBlock.row + 1, this.fallingBlock.column) !== ".";
+    return this.cellAt(this.fallingBlock.row + 1, this.fallingBlock.column) !== ".";
   }
 
   blockHitsFloor() {
@@ -63,6 +52,21 @@ export class Board {
 
   hasFalling() {
     return this.fallingBlock !== null;
+  }
+
+  rows() {
+    return this.height;
+  };
+
+  columns() {
+    return this.width;
+  };
+
+  cellAt(row, column) {
+    if (this.hasFallingAt(row, column)) {
+      return this.fallingBlock.color;
+    }
+    return this.stationaryBlocks[row][column];
   }
 
 }
