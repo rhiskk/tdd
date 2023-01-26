@@ -3,57 +3,69 @@ import { Grid } from "./Grid.mjs";
 export class Board extends Grid {
   width;
   height;
-  fallingBlock;
-  fallingBlockRow;
-  stationaryBlocks;
+  fallingShape;
+  fallingShapeRow;
+  fallingShapeColumn;
+  stationaryShapes;
 
   constructor(width, height) {
     super();
     this.width = width;
     this.height = height;
-    this.fallingBlock = null;
-    this.stationaryBlocks = Array(height).fill().map(() => Array(width).fill("."));
+    this.fallingShape = null;
+    this.stationaryShapes = Array(height).fill().map(() => Array(width).fill("."));
   }
 
   toString() {
     return Grid.prototype.toString.call(this);
   }
 
-  hasFallingAt(row, column) {
-    return this.hasFalling() && this.fallingBlockRow === row && 1 === column;
-  }
-
-  drop(block) {
+  drop(shape) {
     if (this.hasFalling()) {
       throw new Error("already falling");
     }
-    this.fallingBlockRow = 0;
-    this.fallingBlock = block;
+    this.fallingShape = shape;
+    this.fallingShapeRow = 0;
+    this.fallingShapeColumn = Math.floor(this.width / 2 - shape.columns() / 2);
   }
 
-  blockHitsAnotherBlock() {
-    return this.cellAt(this.fallingBlockRow + 1, 1) !== ".";
+  shapeHitsAnotherShape() {
+    return this.cellAt(this.fallingShapeRow + 1, this.fallingShapeColumn) !== ".";
   }
 
-  blockHitsFloor() {
-    return this.fallingBlockRow === this.height - 1;
+  shapeHitsFloor() {
+    return this.fallingShapeRow === this.height - 1;
   }
 
   stopFalling() {
-    this.stationaryBlocks[this.fallingBlockRow][1] = this.fallingBlock.color;
-    this.fallingBlock = null;
+    this.stationaryShapes[this.fallingShapeRow][1] = this.fallingShape.cellAt(0, 0);
+    this.fallingShape = null;
   }
 
   tick() {
-    if (this.blockHitsFloor() || this.blockHitsAnotherBlock()) {
+    if (this.shapeHitsFloor() || this.shapeHitsAnotherShape()) {
       this.stopFalling();
     } else {
-      this.fallingBlockRow += 1;
+      this.fallingShapeRow += 1;
     }
   }
 
   hasFalling() {
-    return this.fallingBlock !== null;
+    return this.fallingShape !== null;
+  }
+
+  withinFallingShape(row, column) {
+    return this.fallingShapeRow <= row
+      && row < this.fallingShapeRow + this.fallingShape.rows()
+      && this.fallingShapeColumn <= column
+      && column < this.fallingShapeColumn + this.fallingShape.columns();
+  }
+
+  fallingCellAt(row, column) {
+    if (this.hasFalling() && this.withinFallingShape(row, column)) {
+      return this.fallingShape.cellAt(row - this.fallingShapeRow, column - this.fallingShapeColumn);
+    }
+    return null;
   }
 
   rows() {
@@ -65,10 +77,8 @@ export class Board extends Grid {
   };
 
   cellAt(row, column) {
-    if (this.hasFallingAt(row, column)) {
-      return this.fallingBlock.color;
-    }
-    return this.stationaryBlocks[row][column];
+    const cell = this.fallingCellAt(row, column);
+    return cell ? cell : this.stationaryShapes[row][column];
   }
 
 }
