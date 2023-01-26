@@ -26,10 +26,6 @@ export class RotatingShape extends Grid {
     return blocks;
   }
 
-  toString() {
-    return Grid.prototype.toString.call(this);
-  }
-
   rotateRight() {
     const rotated = this.blocks.map((_, column) => {
       return this.blocks.map(row => row[column]).reverse();
