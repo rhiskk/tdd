@@ -6,14 +6,14 @@ export class Board extends Grid {
   fallingShape;
   fallingShapeRow;
   fallingShapeColumn;
-  stationaryShapes;
+  stationaryBlocks;
 
   constructor(width, height) {
     super();
     this.width = width;
     this.height = height;
     this.fallingShape = null;
-    this.stationaryShapes = Array(height).fill().map(() => Array(width).fill("."));
+    this.stationaryBlocks = Array(height).fill().map(() => Array(width).fill("."));
   }
 
   toString() {
@@ -30,15 +30,34 @@ export class Board extends Grid {
   }
 
   shapeHitsAnotherShape() {
-    return this.cellAt(this.fallingShapeRow + 1, this.fallingShapeColumn) !== ".";
+    return (this.hasFalling()
+      && this.cellAt(this.fallingShapeRow + this.fallingShape.rows(), this.fallingShapeColumn)
+      !== this.EMPTY);
   }
 
   shapeHitsFloor() {
-    return this.fallingShapeRow === this.height - 1;
+    if (this.hasFalling()) {
+      for (let row = 0; row < this.fallingShape.rows(); row++) {
+        for (let column = 0; column < this.fallingShape.columns(); column++) {
+          if (this.fallingShape.cellAt(row, column) !== this.EMPTY) {
+            if (this.fallingShapeRow + row === this.height - 1) {
+              return true;
+            }
+          }
+        }
+      }
+    }
+    return false;
   }
 
   stopFalling() {
-    this.stationaryShapes[this.fallingShapeRow][1] = this.fallingShape.cellAt(0, 0);
+    for (let row = 0; row < this.fallingShape.rows(); row++) {
+      for (let column = 0; column < this.fallingShape.columns(); column++) {
+        if (this.fallingShape.cellAt(row, column) !== this.EMPTY) {
+          this.stationaryBlocks[this.fallingShapeRow + row][this.fallingShapeColumn + column] = this.fallingShape.cellAt(row, column);
+        }
+      }
+    }
     this.fallingShape = null;
   }
 
@@ -77,8 +96,11 @@ export class Board extends Grid {
   };
 
   cellAt(row, column) {
+    if (row < 0 || row >= this.height || column < 0 || column >= this.width) {
+      return this.EMPTY;
+    }
     const cell = this.fallingCellAt(row, column);
-    return cell ? cell : this.stationaryShapes[row][column];
+    return cell ? cell : this.stationaryBlocks[row][column];
   }
 
 }

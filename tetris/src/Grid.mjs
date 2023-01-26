@@ -1,5 +1,5 @@
 export class Grid {
-
+  EMPTY = ".";
   rows() { };
   columns() { };
   cellAt(row, column) { };
