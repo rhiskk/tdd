@@ -13,7 +13,7 @@ export class RotatingShape extends Grid {
   }
 
   toBlocks(shape) {
-    shape = shape.replace(/^\s+/gm, '');
+    shape = shape.replace(/^\s+/gm, '').trim();
     const rows = shape.split("\n");
     const n = rows.length;
     const blocks = [];
@@ -23,7 +23,6 @@ export class RotatingShape extends Grid {
         blocks[i][j] = rows[i][j];
       }
     }
-
     return blocks;
   }
 
