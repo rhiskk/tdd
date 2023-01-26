@@ -35,6 +35,14 @@ export class Tetromino extends RotatingShape {
     );
   }
 
+  static get S_SHAPE() {
+    return new Tetromino(2,
+      `.SS
+       SS.
+       ...`
+    );
+  }
+
   static get O_SHAPE() {
     return new Tetromino(1,
       `.OO
