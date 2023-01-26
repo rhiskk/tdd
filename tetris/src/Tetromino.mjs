@@ -19,6 +19,14 @@ export class Tetromino extends RotatingShape {
     );
   }
 
+  static get O_SHAPE() {
+    return new Tetromino(1,
+      `.OO
+       .OO
+       ...`
+    );
+  }
+
   orientations;
   currentOrientation;
 
@@ -29,6 +37,9 @@ export class Tetromino extends RotatingShape {
   }
 
   rotateRight() {
+    if (this.orientations === 1) {
+      return this;
+    }
     if (this.orientations === 2 && this.currentOrientation === 1) {
       return this.rotateLeft();
     };
@@ -36,6 +47,9 @@ export class Tetromino extends RotatingShape {
   }
 
   rotateLeft() {
+    if (this.orientations === 1) {
+      return this;
+    }
     if (this.orientations === 2 && this.currentOrientation === 0) {
       return this.rotateRight();
     };
