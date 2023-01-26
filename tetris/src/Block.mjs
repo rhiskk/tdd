@@ -7,4 +7,16 @@ export class Block extends Grid {
     this.color = color;
   }
 
+  rows() {
+    return 1;
+  }
+
+  columns() {
+    return 1;
+  }
+
+  cellAt(row, column) {
+    return this.color;
+  }
+
 }
