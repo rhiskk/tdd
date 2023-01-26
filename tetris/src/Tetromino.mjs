@@ -1,13 +1,6 @@
 import { RotatingShape } from './RotatingShape.mjs';
 
 export class Tetromino extends RotatingShape {
-  static get T_SHAPE() {
-    return new Tetromino(4,
-      `.T.
-       TTT
-       ...`
-    );
-  }
 
   static get I_SHAPE() {
     return new Tetromino(2,
@@ -35,10 +28,26 @@ export class Tetromino extends RotatingShape {
     );
   }
 
+  static get O_SHAPE() {
+    return new Tetromino(1,
+      `.OO
+       .OO
+       ...`
+    );
+  }
+
   static get S_SHAPE() {
     return new Tetromino(2,
       `.SS
        SS.
+       ...`
+    );
+  }
+
+  static get T_SHAPE() {
+    return new Tetromino(4,
+      `.T.
+       TTT
        ...`
     );
   }
@@ -51,13 +60,6 @@ export class Tetromino extends RotatingShape {
     );
   }
 
-  static get O_SHAPE() {
-    return new Tetromino(1,
-      `.OO
-       .OO
-       ...`
-    );
-  }
 
   orientations;
   currentOrientation;
