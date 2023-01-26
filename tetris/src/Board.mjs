@@ -4,6 +4,7 @@ export class Board extends Grid {
   width;
   height;
   fallingBlock;
+  fallingBlockRow;
   stationaryBlocks;
 
   constructor(width, height) {
@@ -19,26 +20,27 @@ export class Board extends Grid {
   }
 
   hasFallingAt(row, column) {
-    return this.hasFalling() && this.fallingBlock.row === row && this.fallingBlock.column === column;
+    return this.hasFalling() && this.fallingBlockRow === row && 1 === column;
   }
 
   drop(block) {
     if (this.hasFalling()) {
       throw new Error("already falling");
     }
+    this.fallingBlockRow = 0;
     this.fallingBlock = block;
   }
 
   blockHitsAnotherBlock() {
-    return this.cellAt(this.fallingBlock.row + 1, this.fallingBlock.column) !== ".";
+    return this.cellAt(this.fallingBlockRow + 1, 1) !== ".";
   }
 
   blockHitsFloor() {
-    return this.fallingBlock.row === this.height - 1;
+    return this.fallingBlockRow === this.height - 1;
   }
 
   stopFalling() {
-    this.stationaryBlocks[this.fallingBlock.row][this.fallingBlock.column] = this.fallingBlock.color;
+    this.stationaryBlocks[this.fallingBlockRow][1] = this.fallingBlock.color;
     this.fallingBlock = null;
   }
 
@@ -46,7 +48,7 @@ export class Board extends Grid {
     if (this.blockHitsFloor() || this.blockHitsAnotherBlock()) {
       this.stopFalling();
     } else {
-      this.fallingBlock.tick();
+      this.fallingBlockRow += 1;
     }
   }
 
