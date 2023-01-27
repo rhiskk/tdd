@@ -39,7 +39,7 @@ export class Board extends Grid {
         for (let column = 0; column < this.fallingShape.columns(); column++) {
           if (
             this.fallingShape.cellAt(row, column) !== this.EMPTY
-            && this.toStationaryRow(row) === this.height - 1
+            && this.toBoardRow(row) === this.height - 1
           ) {
             return true;
           }
@@ -52,7 +52,7 @@ export class Board extends Grid {
   shapeHitsAnotherShape() {
     return (
       this.hasFalling()
-      && this.cellAt(this.toStationaryRow(this.fallingShape.rows()), this.fallingShapeColumn)
+      && this.cellAt(this.toBoardRow(this.fallingShape.rows()), this.fallingShapeColumn)
       !== this.EMPTY
     );
   }
@@ -61,7 +61,7 @@ export class Board extends Grid {
     for (let row = 0; row < this.fallingShape.rows(); row++) {
       for (let column = 0; column < this.fallingShape.columns(); column++) {
         if (this.fallingShape.cellAt(row, column) !== this.EMPTY) {
-          this.stationaryBlocks[this.toStationaryRow(row)][this.toStationaryColumn(column)]
+          this.stationaryBlocks[this.toBoardRow(row)][this.toBoardColumn(column)]
             = this.fallingShape.cellAt(row, column);
         }
       }
@@ -97,11 +97,11 @@ export class Board extends Grid {
     return cell ? cell : this.stationaryBlocks[row][column];
   }
 
-  toStationaryRow(row) {
+  toBoardRow(row) {
     return this.fallingShapeRow + row;
   }
 
-  toStationaryColumn(column) {
+  toBoardColumn(column) {
     return this.fallingShapeColumn + column;
   }
 
