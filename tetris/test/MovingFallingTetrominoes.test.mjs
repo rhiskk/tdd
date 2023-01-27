@@ -14,6 +14,11 @@ describe("A falling tetrominoe", () => {
     }
   }
 
+  function fallToBottomAndStop(board) {
+    fallToBottom(board);
+    board.tick();
+  }
+
   function moveAgainstLeftWall(board) {
     for (let i = 0; i < 3; i++) {
       board.moveLeft();
@@ -111,8 +116,7 @@ describe("A falling tetrominoe", () => {
   it("cannot be moved left if there is another in the way", () => {
     board.drop(Tetromino.T_SHAPE);
     moveAgainstLeftWall(board);
-    fallToBottom(board);
-    board.tick();
+    fallToBottomAndStop(board);
     board.drop(Tetromino.T_SHAPE);
     fallToBottom(board);
     board.moveLeft();
@@ -129,8 +133,7 @@ describe("A falling tetrominoe", () => {
   it("cannot be moved right if there is another in the way", () => {
     board.drop(Tetromino.T_SHAPE);
     moveAgainstRightWall(board);
-    fallToBottom(board);
-    board.tick();
+    fallToBottomAndStop(board);
     board.drop(Tetromino.T_SHAPE);
     fallToBottom(board);
     board.moveRight();
@@ -142,6 +145,22 @@ describe("A falling tetrominoe", () => {
        ..........
        .....T..T.
        ....TTTTTT`
+    );
+  });
+
+  it("cannot be moved down if there is another in the way", () => {
+    board.drop(Tetromino.T_SHAPE);
+    fallToBottomAndStop(board);
+    board.drop(Tetromino.T_SHAPE);
+    fallToBottom(board);
+    board.moveDown();
+    expect(board.toString()).to.equalShape(
+      `..........
+       ..........
+       ....T.....
+       ...TTT....
+       ....T.....
+       ...TTT....`
     );
   });
 
