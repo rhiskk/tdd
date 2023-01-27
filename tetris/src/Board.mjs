@@ -34,15 +34,19 @@ export class Board extends Grid {
   }
 
   moveLeft() {
-    if (this.hasFalling()) {
+    if (this.hasFalling() && this.fallingShapeColumn > 0) {
       this.fallingShapeColumn -= 1;
     }
   }
 
   moveRight() {
-    if (this.hasFalling()) {
+    if (this.hasFalling() && this.fallingShapeColumn < this.width - this.fallingShape.columns()) {
       this.fallingShapeColumn += 1;
     }
+  }
+
+  moveDown() {
+    this.tick();
   }
 
   shapeHitsFloor() {
