@@ -33,6 +33,18 @@ export class Board extends Grid {
     }
   }
 
+  moveLeft() {
+    if (this.hasFalling()) {
+      this.fallingShapeColumn -= 1;
+    }
+  }
+
+  moveRight() {
+    if (this.hasFalling()) {
+      this.fallingShapeColumn += 1;
+    }
+  }
+
   shapeHitsFloor() {
     if (this.hasFalling()) {
       for (let row = 0; row < this.fallingShape.rows(); row++) {
