@@ -33,8 +33,7 @@ export class Board extends Grid {
     }
   }
 
-  moveLeft() {
-    let columnLeftIsEmpty = true;
+  columnsLeftAreEmpty() {
     if (this.hasFalling()) {
       for (let row = 0; row < this.fallingShape.rows(); row++) {
         for (let column = 0; column < this.fallingShape.columns(); column++) {
@@ -42,19 +41,33 @@ export class Board extends Grid {
             this.fallingShape.cellAt(row, column) !== this.EMPTY
             && this.cellAt(this.toBoardRow(row), this.fallingShapeColumn - 1) !== this.EMPTY
           ) {
-            columnLeftIsEmpty = false;
+            return false;
           }
         }
       }
     }
+    return true;
+  }
 
-    if (columnLeftIsEmpty && this.fallingShapeColumn > 0) {
+  rotateLeft() {
+    if (this.hasFalling()) {
+      this.fallingShape = this.fallingShape.rotateLeft();
+    }
+  }
+
+  rotateRight() {
+    if (this.hasFalling()) {
+      this.fallingShape = this.fallingShape.rotateRight();
+    }
+  }
+
+  moveLeft() {
+    if (this.columnsLeftAreEmpty() && this.fallingShapeColumn > 0) {
       this.fallingShapeColumn -= 1;
     }
   }
 
-  moveRight() {
-    let columnRightIsEmpty = true;
+  columnsRightAreEmpty() {
     if (this.hasFalling()) {
       for (let row = 0; row < this.fallingShape.rows(); row++) {
         for (let column = 0; column < this.fallingShape.columns(); column++) {
@@ -62,12 +75,17 @@ export class Board extends Grid {
             this.fallingShape.cellAt(row, column) !== this.EMPTY
             && this.cellAt(this.toBoardRow(row), this.fallingShapeColumn + this.fallingShape.columns()) !== this.EMPTY
           ) {
-            columnRightIsEmpty = false;
+            return false;
           }
         }
       }
     }
-    if (columnRightIsEmpty && this.fallingShapeColumn < this.width - this.fallingShape.columns()) {
+    return true;
+  }
+
+
+  moveRight() {
+    if (this.columnsRightAreEmpty() && this.fallingShapeColumn < this.width - this.fallingShape.columns()) {
       this.fallingShapeColumn += 1;
     }
   }
