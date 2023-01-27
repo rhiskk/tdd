@@ -34,7 +34,21 @@ export class Board extends Grid {
   }
 
   moveLeft() {
-    if (this.hasFalling() && this.fallingShapeColumn > 0) {
+    let columnLeftIsEmpty = true;
+    if (this.hasFalling()) {
+      for (let row = 0; row < this.fallingShape.rows(); row++) {
+        for (let column = 0; column < this.fallingShape.columns(); column++) {
+          if (
+            this.fallingShape.cellAt(row, column) !== this.EMPTY
+            && this.cellAt(this.toBoardRow(row), this.fallingShapeColumn - 1) !== this.EMPTY
+          ) {
+            columnLeftIsEmpty = false;
+          }
+        }
+      }
+    }
+
+    if (columnLeftIsEmpty && this.fallingShapeColumn > 0) {
       this.fallingShapeColumn -= 1;
     }
   }
