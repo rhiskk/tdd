@@ -114,4 +114,34 @@ describe("A falling tetrominoe", () => {
     );
   });
 
+  it("L shape can wall kick left wall", () => {
+    board.drop(Tetromino.L_SHAPE);
+    board.rotateRight();
+    moveLeftXtimes(5);
+    board.rotateLeft();
+    expect(board.toString()).to.equalShape(
+      `..L.......
+       LLL.......
+       ..........
+       ..........
+       ..........
+       ..........`
+    );
+  });
+
+  it("J shape can wall kick right wall", () => {
+    board.drop(Tetromino.J_SHAPE);
+    board.rotateLeft();
+    moveRightXtimes(5);
+    board.rotateRight();
+    expect(board.toString()).to.equalShape(
+      `.......J..
+       .......JJJ
+       ..........
+       ..........
+       ..........
+       ..........`
+    );
+  });
+
 });

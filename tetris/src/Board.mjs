@@ -33,14 +33,7 @@ export class Board extends Grid {
       return;
     }
     let rotatedShape = this.#fallingShape.rotateLeft();
-    if (this.#canMove(rotatedShape)) {
-      this.#fallingShape = rotatedShape;
-    } else if (rotatedShape.column() < 0) {
-      rotatedShape = rotatedShape.moveRight().moveRight();
-      if (this.#canMove(rotatedShape)) {
-        this.#fallingShape = rotatedShape;
-      }
-    }
+    this.#tryToRotate(rotatedShape);
   }
 
   rotateRight() {
@@ -48,13 +41,25 @@ export class Board extends Grid {
       return;
     }
     let rotatedShape = this.#fallingShape.rotateRight();
-    if (this.#canMove(rotatedShape)) {
+    this.#tryToRotate(rotatedShape);
+  }
+
+  #tryToRotate(rotatedShape) {
+    if (this.#isAllowed(rotatedShape)) {
       this.#fallingShape = rotatedShape;
-    } else if (rotatedShape.column() + rotatedShape.columns() >= this.#width) {
+    } else {
+      this.#wallKick(rotatedShape);
+    }
+  }
+
+  #wallKick(rotatedShape) {
+    if (rotatedShape.column() < 0) {
+      rotatedShape = rotatedShape.moveRight();
+      this.#tryToRotate(rotatedShape);
+    }
+    if (rotatedShape.column() + rotatedShape.columns() >= this.#width) {
       rotatedShape = rotatedShape.moveLeft();
-      if (this.#canMove(rotatedShape)) {
-        this.#fallingShape = rotatedShape;
-      }
+      this.#tryToRotate(rotatedShape);
     }
   }
 
@@ -63,7 +68,7 @@ export class Board extends Grid {
       return;
     }
     const movedShape = this.#fallingShape.moveLeft();
-    if (this.#canMove(movedShape)) {
+    if (this.#isAllowed(movedShape)) {
       this.#fallingShape = movedShape;
     }
   }
@@ -73,7 +78,7 @@ export class Board extends Grid {
       return;
     }
     const movedShape = this.#fallingShape.moveRight();
-    if (this.#canMove(movedShape)) {
+    if (this.#isAllowed(movedShape)) {
       this.#fallingShape = movedShape;
     }
   }
@@ -83,7 +88,7 @@ export class Board extends Grid {
       return;
     }
     const movedShape = this.#fallingShape.moveDown();
-    if (this.#canMove(movedShape)) {
+    if (this.#isAllowed(movedShape)) {
       this.#fallingShape = movedShape;
     } else {
       this.#stopFalling();
@@ -119,7 +124,7 @@ export class Board extends Grid {
     this.#fallingShape = null;
   }
 
-  #canMove(movedShape) {
+  #isAllowed(movedShape) {
     if (!(movedShape instanceof MovingShape)) {
       throw new Error("not a moving shape");
     }
