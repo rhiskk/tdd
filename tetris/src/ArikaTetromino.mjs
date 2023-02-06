@@ -24,6 +24,15 @@ export class ArikaTetromino extends RotatingShape {
     ]);
   }
 
+  static get O_SHAPE() {
+    return new ArikaTetromino([
+      `....
+       .OO.
+       .OO.
+       ....`,
+    ]);
+  }
+
   static get I_SHAPE() {
     return new ArikaTetromino([
       `....
@@ -34,6 +43,74 @@ export class ArikaTetromino extends RotatingShape {
        ..I.
        ..I.
        ..I.`,
+    ]);
+  }
+
+  static get J_SHAPE() {
+    return new ArikaTetromino([
+      `....
+       JJJ.
+       ..J.
+       ....`,
+      `.J..
+       .J..
+       JJ..
+       ....`,
+      `....
+       J...
+       JJJ.
+       ....`,
+      `.JJ.
+       .J..
+       .J..
+       ....`,
+    ]);
+  }
+
+  static get L_SHAPE() {
+    return new ArikaTetromino([
+      `....
+       LLL.
+       L...
+       ....`,
+      `LL..
+       .L..
+       .L..
+       ....`,
+      `....
+       ..L.
+       LLL.
+       ....`,
+      `.L..
+       .L..
+       .LL.
+       ....`,
+    ]);
+  }
+
+  static get S_SHAPE() {
+    return new ArikaTetromino([
+      `....
+       .SS.
+       SS..
+       ....`,
+      `S...
+       SS..
+       .S..
+       ....`,
+    ]);
+  }
+
+  static get Z_SHAPE() {
+    return new ArikaTetromino([
+      `....
+       ZZ..
+       .ZZ.
+       ....`,
+      `..Z.
+       .ZZ.
+       .Z..
+       ....`,
     ]);
   }
 
