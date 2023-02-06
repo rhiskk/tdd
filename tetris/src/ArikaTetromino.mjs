@@ -7,12 +7,40 @@ export class ArikaTetromino extends RotatingShape {
       `....
        TTT.
        .T..
+       ....`,
+      `.T..
+       TT..
+       .T..
+       ....`,
+      `....
+       .T..
+       TTT.
        ....`
-    ], 0);
+      ,
+      `.T..
+       .TT.
+       .T..
+       ....`,
+    ]);
   }
+
+  #orientations;
+  #currentOrientation;
 
   constructor(orientations, currentOrientation = 0) {
     super(orientations[currentOrientation]);
+    this.#orientations = orientations;
+    this.#currentOrientation = currentOrientation;
+  }
+
+  rotateRight() {
+    const nextOrientation = this.#currentOrientation === this.#orientations.length - 1 ? 0 : this.#currentOrientation + 1;
+    return new ArikaTetromino(this.#orientations, nextOrientation);
+  }
+
+  rotateLeft() {
+    const nextOrientation = this.#currentOrientation === 0 ? this.#orientations.length - 1 : this.#currentOrientation - 1;
+    return new ArikaTetromino(this.#orientations, nextOrientation);
   }
 
 }
