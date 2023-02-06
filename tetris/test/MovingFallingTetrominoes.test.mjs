@@ -154,6 +154,7 @@ describe("A falling tetrominoe", () => {
     board.drop(Tetromino.T_SHAPE);
     fallToBottom(board);
     board.moveDown();
+    board.moveDown();
     expect(board.toString()).to.equalShape(
       `..........
        ..........

@@ -60,34 +60,33 @@ export class Tetromino extends RotatingShape {
     );
   }
 
-
-  orientations;
-  currentOrientation;
+  #orientations;
+  #currentOrientation;
 
   constructor(orientations, shape, currentOrientation = 0) {
     super(shape);
-    this.orientations = orientations;
-    this.currentOrientation = currentOrientation;
+    this.#orientations = orientations;
+    this.#currentOrientation = currentOrientation;
   }
 
   rotateRight() {
-    if (this.orientations === 1) {
+    if (this.#orientations === 1) {
       return this;
     }
-    if (this.orientations === 2 && this.currentOrientation === 1) {
+    if (this.#orientations === 2 && this.#currentOrientation === 1) {
       return this.rotateLeft();
     };
-    return new Tetromino(this.orientations, super.rotateRight().toString(), this.currentOrientation + 1);
+    return new Tetromino(this.#orientations, super.rotateRight().toString(), this.#currentOrientation + 1);
   }
 
   rotateLeft() {
-    if (this.orientations === 1) {
+    if (this.#orientations === 1) {
       return this;
     }
-    if (this.orientations === 2 && this.currentOrientation === 0) {
+    if (this.#orientations === 2 && this.#currentOrientation === 0) {
       return this.rotateRight();
     };
-    return new Tetromino(this.orientations, super.rotateLeft().toString(), this.currentOrientation - 1);
+    return new Tetromino(this.#orientations, super.rotateLeft().toString(), this.#currentOrientation - 1);
   }
 
 

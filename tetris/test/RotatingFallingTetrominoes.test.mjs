@@ -8,7 +8,13 @@ describe("A falling tetrominoe", () => {
     board = new Board(10, 6);
   });
 
-  it("can be moved rotated left", () => {
+  function moveDownXtimes(x) {
+    for (let i = 0; i < x; i++) {
+      board.tick();
+    }
+  }
+
+  it("can be rotated left", () => {
     board.drop(Tetromino.T_SHAPE);
     board.rotateLeft();
     expect(board.toString()).to.equalShape(
@@ -21,7 +27,7 @@ describe("A falling tetrominoe", () => {
     );
   });
 
-  it("can be moved rotated right", () => {
+  it("can be rotated right", () => {
     board.drop(Tetromino.T_SHAPE);
     board.rotateRight();
     expect(board.toString()).to.equalShape(
@@ -31,6 +37,38 @@ describe("A falling tetrominoe", () => {
        ..........
        ..........
        ..........`
+    );
+  });
+
+  it("cannot be rotated left if there is no room to rotate", () => {
+    board.drop(Tetromino.T_SHAPE);
+    moveDownXtimes(5);
+    board.drop(Tetromino.T_SHAPE);
+    moveDownXtimes(2);
+    board.rotateLeft();
+    expect(board.toString()).to.equalShape(
+      `..........
+       ..........
+       ....T.....
+       ...TTT....
+       ....T.....
+       ...TTT....`
+    );
+  });
+
+  it("cannot be rotated right if there is no room to rotate", () => {
+    board.drop(Tetromino.T_SHAPE);
+    moveDownXtimes(5);
+    board.drop(Tetromino.T_SHAPE);
+    moveDownXtimes(2);
+    board.rotateRight();
+    expect(board.toString()).to.equalShape(
+      `..........
+       ..........
+       ....T.....
+       ...TTT....
+       ....T.....
+       ...TTT....`
     );
   });
 
