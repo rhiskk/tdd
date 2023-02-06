@@ -24,6 +24,19 @@ export class ArikaTetromino extends RotatingShape {
     ]);
   }
 
+  static get I_SHAPE() {
+    return new ArikaTetromino([
+      `....
+       IIII
+       ....
+       ....`,
+      `..I.
+       ..I.
+       ..I.
+       ..I.`,
+    ]);
+  }
+
   #orientations;
   #currentOrientation;
 
