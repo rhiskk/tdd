@@ -14,6 +14,12 @@ describe("A falling tetrominoe", () => {
     }
   }
 
+  function moveLeftXtimes(x) {
+    for (let i = 0; i < x; i++) {
+      board.moveLeft();
+    }
+  }
+
   it("can be rotated left", () => {
     board.drop(Tetromino.T_SHAPE);
     board.rotateLeft();
@@ -69,6 +75,21 @@ describe("A falling tetrominoe", () => {
        ...TTT....
        ....T.....
        ...TTT....`
+    );
+  });
+
+  it("I shape can wall kick left wall", () => {
+    board.drop(Tetromino.I_SHAPE);
+    board.rotateLeft();
+    moveLeftXtimes(5);
+    board.rotateLeft();
+    expect(board.toString()).to.equalShape(
+      `..........
+       ..........
+       IIII......
+       ..........
+       ..........
+       ..........`
     );
   });
 

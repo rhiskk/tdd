@@ -32,9 +32,14 @@ export class Board extends Grid {
     if (!this.hasFalling()) {
       return;
     }
-    const rotatedShape = this.#fallingShape.rotateLeft();
+    let rotatedShape = this.#fallingShape.rotateLeft();
     if (this.#canMove(rotatedShape)) {
       this.#fallingShape = rotatedShape;
+    } else if (rotatedShape.column() < 0) {
+      rotatedShape = rotatedShape.moveRight().moveRight();
+      if (this.#canMove(rotatedShape)) {
+        this.#fallingShape = rotatedShape;
+      }
     }
   }
 
