@@ -121,7 +121,23 @@ export class Board extends Grid {
         }
       }
     }
+    this.#lineClear();
     this.#fallingShape = null;
+  }
+
+  #lineClear() {
+    for (let row = 0; row < this.#height; row++) {
+      let fullRow = true;
+      for (let column = 0; column < this.#width; column++) {
+        if (this.#stationaryBlocks[row][column] === this.EMPTY) {
+          fullRow = false;
+        }
+      }
+      if (fullRow) {
+        this.#stationaryBlocks.splice(row, 1);
+        this.#stationaryBlocks.unshift(Array(this.#width).fill(this.EMPTY));
+      }
+    }
   }
 
   #isAllowed(movedShape) {
