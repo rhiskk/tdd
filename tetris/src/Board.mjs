@@ -6,24 +6,24 @@ export class Board extends Grid {
   #height;
   #fallingShape;
   #stationaryBlocks;
-  #subscribers;
+  #observers;
 
   constructor(width, height) {
     super();
-    this.#subscribers = [];
+    this.#observers = [];
     this.#width = width;
     this.#height = height;
     this.#fallingShape = null;
     this.#stationaryBlocks = Array(height).fill().map(() => Array(width).fill(this.EMPTY));
   }
 
-  subscribe(subscriber) {
-    this.#subscribers.push(subscriber);
+  subscribe(observer) {
+    this.#observers.push(observer);
   }
 
-  #broadcast(linesCleared) {
-    for (let subscriber of this.#subscribers) {
-      subscriber(linesCleared);
+  #notify(linesCleared) {
+    for (let observer of this.#observers) {
+      observer(linesCleared);
     }
   }
 
@@ -153,7 +153,7 @@ export class Board extends Grid {
       }
     }
     if (linesCleared > 0) {
-      this.#broadcast(linesCleared);
+      this.#notify(linesCleared);
     }
   }
 
