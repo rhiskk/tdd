@@ -73,7 +73,6 @@ describe("Board", () => {
     moveLeftXtimes(10);
     fallXTimes(5);
     board.drop(shapeI);
-    console.log(board.toString());
     moveRightXtimes(10);
     fallXTimes(5);
     expect(board.toString()).to.equalShape(
