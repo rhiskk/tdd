@@ -1,3 +1,8 @@
+/*
+The function daysUntilChristmas does not take any parameters 
+and the results depend on the current time.
+*/
+
 const millisPerDay = 24 * 60 * 60 * 1000;
 
 export function daysUntilChristmas() {
