@@ -1,7 +1,3 @@
-/*
-The diceHandValue does not take any parameters and
-the result is based on a random number generator.
-*/
 
 function diceRoll() {
   const min = 1;
@@ -9,9 +5,7 @@ function diceRoll() {
   return Math.floor(Math.random() * (max + 1 - min) + min);
 }
 
-export function diceHandValue() {
-  const die1 = diceRoll();
-  const die2 = diceRoll();
+export function diceHandValue(die1 = diceRoll(), die2 = diceRoll()) {
   if (die1 === die2) {
     // one pair
     return 100 + die1;
