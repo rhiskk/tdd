@@ -33,7 +33,7 @@
     "parallel": true
   },
   "scripts": {
-    "test": "mocha",
+    "test": "PGUSER=untestable PGPASSWORD=secret mocha",
     "autotest": "npm run test -- --watch",
     "format": "prettier --write ."
   }

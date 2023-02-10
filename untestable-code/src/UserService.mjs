@@ -1,14 +1,6 @@
 import argon2 from "@node-rs/argon2";
 import pg from "pg";
 
-/*
-Testing code that uses a database requires a bit of extra work since 
-a test database needs to be created, populated with test data and cleaned up after.
-Hard to generate test data as PostgresUserDao save method only accepts users with a passwordHash as a parameter 
-and the passwordHash is generated inside the changePassword method.
-Pasword verification is done only inside the changePassword method, which makes it 
-impossible to verify that the password is actually changed without calling the method again.
-*/
 
 export class PostgresUserDao {
   static instance;
@@ -30,6 +22,21 @@ export class PostgresUserDao {
 
   close() {
     this.db.end();
+  }
+
+  open() {
+    this.db.connect();
+  }
+
+  createTables() {
+    return this.db.query(`create table if not exists users (
+      user_id integer primary key,
+      password_hash varchar(100) not null
+    )`);
+  }
+
+  dropTables() {
+    return this.db.query(`drop table if exists users`);
   }
 
   rowToUser(row) {
@@ -57,15 +64,36 @@ export class PostgresUserDao {
   }
 }
 
-export class PasswordService {
+export class UserService {
   users = PostgresUserDao.getInstance();
 
   async changePassword(userId, oldPassword, newPassword) {
-    const user = await this.users.getById(userId);
-    if (!argon2.verifySync(user.passwordHash, oldPassword)) {
+    if (!await this.verifyPassword(userId, oldPassword)) {
       throw new Error("wrong old password");
     }
-    user.passwordHash = argon2.hashSync(newPassword);
+    const user = {
+      userId,
+      passwordHash: argon2.hashSync(newPassword),
+    };
     await this.users.save(user);
+    return user;
+  }
+
+  async addNewUser(userId, password) {
+    const user = await this.users.getById(userId);
+    if (user) {
+      throw new Error("User already exists");
+    }
+    const newUser = {
+      userId,
+      passwordHash: argon2.hashSync(password),
+    };
+    await this.users.save(newUser);
+    return newUser;
+  }
+
+  async verifyPassword(userId, password) {
+    const user = await this.users.getById(userId);
+    return argon2.verifySync(user.passwordHash, password);
   }
 }
