@@ -2,11 +2,13 @@ export class Item {
   #MAX_QUALITY = 50;
   #MIN_QUALITY = 0;
   #LEGENDARY_QUALITY = 80;
+  #sellIn;
+  #quality;
 
   constructor(name, sellIn, quality) {
     this.name = name;
-    this.sellIn = sellIn;
-    this.quality = this.#isLegendary() ? this.#LEGENDARY_QUALITY : quality;
+    this.#sellIn = sellIn;
+    this.#quality = this.#isLegendary() ? this.#LEGENDARY_QUALITY : quality;
   }
 
   update() {
@@ -26,26 +28,34 @@ export class Item {
     }
   }
 
+  sellIn() {
+    return this.#sellIn;
+  }
+
+  quality() {
+    return this.#quality;
+  }
+
   #updateAged() {
-    this.sellIn--;
+    this.#sellIn--;
     const increase = this.#isOutOfDate() ? 2 : 1;
     this.#increaseQuality(increase);
   }
 
   #updateTicket() {
     let increase = 1;
-    if (this.sellIn <= 10) {
+    if (this.#sellIn <= 10) {
       increase++;
     }
-    if (this.sellIn <= 5) {
+    if (this.#sellIn <= 5) {
       increase++;
     }
-    this.sellIn--;
-    this.#isOutOfDate() ? (this.quality = 0) : this.#increaseQuality(increase);
+    this.#sellIn--;
+    this.#isOutOfDate() ? (this.#quality = 0) : this.#increaseQuality(increase);
   }
 
   #updateNormal() {
-    this.sellIn--;
+    this.#sellIn--;
     const decrease = this.#isOutOfDate() ? 2 : 1;
     this.#decreaseQuality(decrease);
   }
@@ -63,28 +73,14 @@ export class Item {
   }
 
   #isOutOfDate() {
-    return this.sellIn < 0;
+    return this.#sellIn < 0;
   }
 
   #increaseQuality(amount = 1) {
-    this.quality = Math.min(this.quality + amount, this.#MAX_QUALITY);
+    this.#quality = Math.min(this.#quality + amount, this.#MAX_QUALITY);
   }
 
   #decreaseQuality(amount = 1) {
-    this.quality = Math.max(this.quality - amount, this.#MIN_QUALITY);
-  }
-}
-
-export class Shop {
-  constructor(items = []) {
-    this.items = items;
-  }
-
-  updateQuality() {
-    for (var i = 0; i < this.items.length; i++) {
-      this.items[i].update();
-    }
-
-    return this.items;
+    this.#quality = Math.max(this.#quality - amount, this.#MIN_QUALITY);
   }
 }
