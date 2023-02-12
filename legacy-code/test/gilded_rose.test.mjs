@@ -60,7 +60,7 @@ describe("Gilded Rose", () => {
 
   it("backstage passes should increase quality by 2 when sell in is between 6 and 10", () => {
     const gildedRose = new Shop([
-      new Item("Backstage passes to a TAFKAL80ETC concert", 6, 1),
+      new Item("Backstage passes to a TAFKAL80ETC concert", 10, 1),
     ]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality()).to.equal(3);
@@ -100,7 +100,7 @@ describe("Gilded Rose", () => {
 
   it("backstage passes with negative sell in should not decrease in quality", () => {
     const gildedRose = new Shop([
-      new Item("Backstage passes to a TAFKAL80ETC concert", -10, 10),
+      new Item("Backstage passes to a TAFKAL80ETC concert", -10, 0),
     ]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality()).to.equal(0);
@@ -128,6 +128,24 @@ describe("Gilded Rose", () => {
     const gildedRose = new Shop([new Item("foo", 1, 0)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality()).to.equal(0);
+  });
+
+  it("conjured item should decrease quality by 2 when it is not out of date", () => {
+    const gildedRose = new Shop([new Item("Conjured Item", 2, 4)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality()).to.equal(2);
+  });
+
+  it("conjured item should decrease quality by 4 when it is out of date", () => {
+    const gildedRose = new Shop([new Item("Conjured Item", 0, 4)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality()).to.equal(0);
+  });
+
+  it("items name should not change", () => {
+    const gildedRose = new Shop([new Item("foo", 1, 1)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].name()).to.equal("foo");
   });
 
 });

@@ -4,9 +4,10 @@ export class Item {
   #LEGENDARY_QUALITY = 80;
   #sellIn;
   #quality;
+  #name;
 
   constructor(name, sellIn, quality) {
-    this.name = name;
+    this.#name = name;
     this.#sellIn = sellIn;
     this.#quality = this.#isLegendary() ? this.#LEGENDARY_QUALITY : quality;
   }
@@ -16,12 +17,18 @@ export class Item {
       return;
     }
     switch (true) {
+      case this.#isConjured():
+        this.#updateConjured();
+        break;
+
       case this.#isAged():
         this.#updateAged();
         break;
+
       case this.#isTicket():
         this.#updateTicket();
         break;
+
       default:
         this.#updateNormal();
         break;
@@ -34,6 +41,10 @@ export class Item {
 
   quality() {
     return this.#quality;
+  }
+
+  name() {
+    return this.#name;
   }
 
   #updateAged() {
@@ -60,16 +71,26 @@ export class Item {
     this.#decreaseQuality(decrease);
   }
 
+  #updateConjured() {
+    this.#sellIn--;
+    const decrease = this.#isOutOfDate() ? 4 : 2;
+    this.#decreaseQuality(decrease);
+  }
+
+  #isConjured() {
+    return this.#name === "Conjured Item";
+  }
+
   #isAged() {
-    return this.name === "Aged Brie";
+    return this.#name === "Aged Brie";
   }
 
   #isTicket() {
-    return this.name === "Backstage passes to a TAFKAL80ETC concert";
+    return this.#name === "Backstage passes to a TAFKAL80ETC concert";
   }
 
   #isLegendary() {
-    return this.name === "Sulfuras, Hand of Ragnaros";
+    return this.#name === "Sulfuras, Hand of Ragnaros";
   }
 
   #isOutOfDate() {
