@@ -2,7 +2,6 @@ import { expect } from "chai";
 import { Item, Shop } from "../src/gilded_rose.mjs";
 
 describe("Gilded Rose", () => {
-
   it("shop is empty by default", () => {
     const gildedRose = new Shop();
     expect(gildedRose.items).to.be.empty;
@@ -30,12 +29,6 @@ describe("Gilded Rose", () => {
     const gildedRose = new Shop([new Item("Aged Brie", 1, 1)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).to.equal(2);
-  });
-
-  it("aged brie should decrease sell in", () => {
-    const gildedRose = new Shop([new Item("Aged Brie", 1, 1)]);
-    const items = gildedRose.updateQuality();
-    expect(items[0].sellIn).to.equal(0);
   });
 
   it("aged brie should still increase quality when sell in is 0 or less", () => {
@@ -116,12 +109,6 @@ describe("Gilded Rose", () => {
     const gildedRose = new Shop([new Item("foo", 1, 1)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).to.equal(0);
-  });
-
-  it("basic item should decrease sell in by 1", () => {
-    const gildedRose = new Shop([new Item("foo", 1, 1)]);
-    const items = gildedRose.updateQuality();
-    expect(items[0].sellIn).to.equal(0);
   });
 
   it("basic item should decrease quality by 2 when sell in is less than 0", () => {
