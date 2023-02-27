@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:e2e": "playwright test"
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "test:e2e": "playwright test",
+    "test": "npm run docker:up && wait-on tcp:5432 && npx prisma migrate deploy && jest --watch"
   },
   "dependencies": {
     "@prisma/client": "^4.10.1",
@@ -23,6 +26,13 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.31.1",
-    "prisma": "^4.10.1"
+    "@types/jest": "^29.4.0",
+    "jest": "^29.4.3",
+    "jest-environment-jsdom": "^29.4.3",
+    "jest-mock-extended": "^3.0.2",
+    "node-mocks-http": "^1.12.1",
+    "prisma": "^4.10.1",
+    "ts-node": "^10.9.1",
+    "wait-on": "^7.0.1"
   }
 }

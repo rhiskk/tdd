@@ -8,8 +8,13 @@ datasource db {
 }
 
 model Hello {
-  id        String   @id @default(cuid())
-  message   String   @default("Hello World")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id      String @id @default(cuid())
+  message String @default("Hello World")
+}
+
+model Todo {
+  id        String  @id @default(cuid())
+  title     String
+  completed Boolean @default(false)
+  archived  Boolean @default(false)
 }
