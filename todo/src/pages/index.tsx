@@ -1,37 +1,39 @@
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 
-type Hello = {
+type Todo = {
   id: string
-  message: string
+  title: string
+  completed: boolean
+  archived: boolean
 }
 
-async function postHello() {
-  const res = await fetch('/api/hello', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ message: 'Hello from the client' }),
-  })
-  return res.json()
-}
+// async function postHello() {
+//   const res = await fetch('/api/hello', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({ message: 'Hello from the client' }),
+//   })
+//   return res.json()
+// }
 
 export default function Home() {
-  const [hellos, setHellos] = useState<Hello[]>([])
+  const [todos, setTodos] = useState<Todo[]>([])
 
   useEffect(() => {
-    fetch('/api/hello')
+    fetch('/api/todo')
       .then((res) => res.json())
       .then((data) => {
-        setHellos(data)
+        setTodos(data)
       })
   }, [])
 
-  const handleClick = async () => {
-    const hello = (await postHello()) as Hello
-    setHellos([...hellos, hello])
-  }
+  // const handleClick = async () => {
+  //   const hello = (await postHello()) as Hello
+  //   setHellos([...hellos, hello])
+  // }
 
   return (
     <>
@@ -43,11 +45,12 @@ export default function Home() {
       </Head>
       <main>
         <div>
-          <h1>Hello todo!</h1>
-          {hellos?.map((hello) => (
-            <p key={hello.id}>{hello.message}</p>
-          ))}
-          <button onClick={handleClick}>Post hello</button>
+          <h1>Todos:</h1>
+          <ul>
+            {todos?.map((todo) => (
+              <li key={todo.id}>{todo.title}</li>
+            ))}
+          </ul>
         </div>
       </main>
     </>
