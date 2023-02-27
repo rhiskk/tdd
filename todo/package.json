@@ -10,7 +10,7 @@
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
     "test:e2e": "playwright test",
-    "test": "npm run docker:up && wait-on tcp:5432 && npx prisma migrate deploy && jest --watch"
+    "test": "npm run docker:up && wait-on tcp:5432 && npx prisma migrate deploy && jest --watchAll"
   },
   "dependencies": {
     "@prisma/client": "^4.10.1",
@@ -22,7 +22,8 @@
     "next": "13.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "typescript": "4.9.5"
+    "typescript": "4.9.5",
+    "zod": "^3.20.6"
   },
   "devDependencies": {
     "@playwright/test": "^1.31.1",
