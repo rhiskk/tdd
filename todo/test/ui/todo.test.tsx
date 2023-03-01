@@ -1,9 +1,9 @@
 import { screen, render } from '@testing-library/react'
-import { type TodoProps, Todo } from '@/components/todo'
+import { Todo } from '@/components/Todo'
 
 describe('Todo', () => {
   it('should render a todo with the correct title', () => {
-    const todo: TodoProps = {
+    const todo = {
       id: '1',
       title: 'Todo 1',
       completed: false,

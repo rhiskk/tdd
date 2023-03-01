@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { Todo } from '@/components/todo'
+import { TodoList } from '@/components/TodoList'
 import { useEffect, useState } from 'react'
 
 type Todo = {
@@ -47,11 +47,7 @@ export default function Home() {
       <main>
         <div>
           <h1>Todos:</h1>
-          <ul>
-            {todos?.map((todo) => (
-              <Todo key={todo.id} todo={todo} />
-            ))}
-          </ul>
+          <TodoList todos={todos} />
         </div>
       </main>
     </>
