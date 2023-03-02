@@ -6,9 +6,5 @@ export type TodoProps = {
 }
 
 export const Todo = ({ todo }: { todo: TodoProps }) => {
-  return (
-    <li>
-      <span>{todo.title}</span>
-    </li>
-  )
+  return <li>{todo.title}</li>
 }
