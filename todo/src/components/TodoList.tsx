@@ -1,4 +1,11 @@
-import { type TodoProps, Todo } from './Todo'
+import { Todo } from './Todo'
+
+type TodoProps = {
+  id: string
+  title: string
+  completed: boolean
+  archived: boolean
+}
 
 export const TodoList = ({ todos }: { todos: TodoProps[] }) => {
   return (

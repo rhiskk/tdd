@@ -1,10 +1,16 @@
-export type TodoProps = {
-  id: string
-  title: string
-  completed: boolean
-  archived: boolean
-}
+export const Todo = ({ todo, markCompleted }: any) => {
+  const handleCheckboxClick = () => {
+    markCompleted(todo.id)
+  }
 
-export const Todo = ({ todo }: { todo: TodoProps }) => {
-  return <li>{todo.title}</li>
+  return (
+    <li>
+      {todo.title}
+      <input
+        type="checkbox"
+        checked={todo.completed}
+        onChange={handleCheckboxClick}
+      />
+    </li>
+  )
 }
