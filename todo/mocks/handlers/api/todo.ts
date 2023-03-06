@@ -25,14 +25,14 @@ const todos: Todo[] = [
 export const todoHandlers = [
   rest.post('/api/todo', async (req, res, ctx) => {
     const { title } = await req.json()
-    return res(
-      ctx.status(201),
-      ctx.json({
-        id: '1',
-        title,
-        completed: false,
-      }),
-    )
+    const todo = {
+      id: '3',
+      title,
+      completed: false,
+      archived: false,
+    }
+    todos.push(todo)
+    return res(ctx.status(201), ctx.json(todo))
   }),
   rest.get('/api/todo', async (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(todos))
