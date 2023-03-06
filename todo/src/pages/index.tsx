@@ -1,13 +1,6 @@
 import Head from 'next/head'
 import { TodoList } from '@/components/TodoList'
-import { useEffect, useState } from 'react'
-
-type Todo = {
-  id: string
-  title: string
-  completed: boolean
-  archived: boolean
-}
+import useGetTodos from '@/hooks/useGetTodos'
 
 // async function postHello() {
 //   const res = await fetch('/api/hello', {
@@ -21,15 +14,7 @@ type Todo = {
 // }
 
 export default function Home() {
-  const [todos, setTodos] = useState<Todo[]>([])
-
-  useEffect(() => {
-    fetch('/api/todo')
-      .then((res) => res.json())
-      .then((data) => {
-        setTodos(data)
-      })
-  }, [])
+  const todos = useGetTodos()
 
   // const handleClick = async () => {
   //   const hello = (await postHello()) as Hello
