@@ -1,7 +1,9 @@
 import { useState } from 'react'
+import useAddTodo from '@/hooks/useAddTodo'
 
-export const TodoForm = ({ addTodo }: any) => {
+export const TodoForm = () => {
   const [title, setTitle] = useState('')
+  const addTodo = useAddTodo()
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value)

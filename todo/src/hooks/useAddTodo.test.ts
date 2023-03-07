@@ -5,11 +5,13 @@ describe('useAddTodo', () => {
   it('should send a post request with the title and return a created todo', async () => {
     const { result } = renderHook(useAddTodo)
 
+    let newTodo = null
+
     await act(async () => {
-      await result.current.addTodo('Todo test')
+      newTodo = await result.current('Todo test')
     })
 
-    expect(result.current.newTodo).toEqual({
+    expect(newTodo).toEqual({
       id: '3',
       title: 'Todo test',
       completed: false,

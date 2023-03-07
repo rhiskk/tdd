@@ -1,6 +1,9 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { TodoForm } from '@/components/TodoForm'
+import useAddTodo from '@/hooks/useAddTodo'
+
+jest.mock('@/hooks/useAddTodo')
 
 describe('TodoForm', () => {
   it('should render an input field for title', () => {
@@ -18,8 +21,9 @@ describe('TodoForm', () => {
   it('should call addTodo with input when the submit button is clicked', async () => {
     const user = userEvent.setup()
     const mockAddTodo = jest.fn()
+    ;(useAddTodo as any).mockReturnValue(mockAddTodo)
 
-    render(<TodoForm addTodo={mockAddTodo} />)
+    render(<TodoForm />)
 
     const submitButton = screen.getByRole('button')
     const input = screen.getByRole('textbox')
