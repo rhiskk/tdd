@@ -41,15 +41,13 @@ describe('Todo', () => {
     expect(checkbox).not.toBeChecked()
   })
 
-  it('should call onUpdate when checkbox is clicked', async () => {
+  it('should mark the todo as completed', async () => {
     const user = userEvent.setup()
-    const mockMarkCompleted = jest.fn()
 
-    render(<Todo todo={todo} markCompleted={mockMarkCompleted} />)
+    render(<Todo todo={todo} />)
     const checkbox = screen.getByRole('checkbox')
 
     await user.click(checkbox)
-
-    expect(mockMarkCompleted).toHaveBeenCalled()
+    expect(checkbox).toBeChecked()
   })
 })

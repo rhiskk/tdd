@@ -37,4 +37,11 @@ export const todoHandlers = [
   rest.get('/api/todo', async (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(todos))
   }),
+  rest.put('/api/todo/:id', async (req, res, ctx) => {
+    const { id } = req.params
+    const { completed } = await req.json()
+    const todo = todos.find((todo) => todo.id === id)
+    todo!.completed = completed
+    return res(ctx.status(200), ctx.json(todo))
+  }),
 ]

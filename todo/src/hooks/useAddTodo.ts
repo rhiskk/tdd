@@ -1,4 +1,4 @@
-import { Todo } from '../types'
+import type { Todo } from '../types'
 
 export default function useAddTodo() {
   const addTodo = async (title: string) => {

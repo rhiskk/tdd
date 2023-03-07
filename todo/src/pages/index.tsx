@@ -2,24 +2,8 @@ import Head from 'next/head'
 import { TodoList } from '@/components/TodoList'
 import useGetTodos from '@/hooks/useGetTodos'
 
-// async function postHello() {
-//   const res = await fetch('/api/hello', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify({ message: 'Hello from the client' }),
-//   })
-//   return res.json()
-// }
-
 export default function Home() {
   const todos = useGetTodos()
-
-  // const handleClick = async () => {
-  //   const hello = (await postHello()) as Hello
-  //   setHellos([...hellos, hello])
-  // }
 
   return (
     <>

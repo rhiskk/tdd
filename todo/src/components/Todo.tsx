@@ -1,6 +1,14 @@
-export const Todo = ({ todo, markCompleted }: any) => {
-  const handleCheckboxClick = () => {
-    markCompleted(todo.id)
+import type { Todo as TodoProps } from '@/types'
+import useUpdateTodo from '@/hooks/useUpdateTodo'
+import { useState } from 'react'
+
+export const Todo = ({ todo }: { todo: TodoProps }) => {
+  const [completed, setCompleted] = useState(todo.completed)
+  const updateTodo = useUpdateTodo()
+
+  const handleCheckboxClick = async () => {
+    const updated = await updateTodo(todo.id, { completed: !todo.completed })
+    setCompleted(updated.completed)
   }
 
   return (
@@ -8,7 +16,7 @@ export const Todo = ({ todo, markCompleted }: any) => {
       {todo.title}
       <input
         type="checkbox"
-        checked={todo.completed}
+        checked={completed}
         onChange={handleCheckboxClick}
       />
     </li>
