@@ -1,9 +1,16 @@
 import Head from 'next/head'
 import { TodoList } from '@/components/TodoList'
 import useGetTodos from '@/hooks/useGetTodos'
+import { TodoForm } from '@/components/TodoForm'
+import useArchiveTodos from '@/hooks/useArchiveTodos'
 
 export default function Home() {
+  const archiveTodos = useArchiveTodos()
   const todos = useGetTodos()
+
+  const handleArchive = async () => {
+    await archiveTodos()
+  }
 
   return (
     <>
@@ -16,7 +23,9 @@ export default function Home() {
       <main>
         <div>
           <h1>Todos:</h1>
+          <TodoForm />
           <TodoList todos={todos} />
+          <button onClick={handleArchive}>Archive Completed Todos</button>
         </div>
       </main>
     </>

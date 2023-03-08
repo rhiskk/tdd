@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import Home from '@/pages/index'
+import userEvent from '@testing-library/user-event'
 
 describe('Homepage', () => {
   it('should render the home page', () => {
@@ -14,10 +15,26 @@ describe('Homepage', () => {
     expect(todoList).toHaveLength(2)
   })
 
-  it('should render a list of todos with the correct text', async () => {
+  it('should render a todo form', () => {
     render(<Home />)
+    const todoForm = screen.getByRole('form')
+    expect(todoForm).toBeInTheDocument()
+  })
+
+  it('should render an archive button', async () => {
+    render(<Home />)
+    const archiveButton = await screen.findByRole('button', {
+      name: 'Archive Completed Todos',
+    })
+    expect(archiveButton).toBeInTheDocument()
+  })
+
+  it('should show only non archived todos after archiving', async () => {
+    const user = userEvent.setup()
+    render(<Home />)
+    const archiveButton = await screen.findByText('Archive Completed Todos')
+    await user.click(archiveButton)
     const todoList = await screen.findAllByRole('listitem')
-    expect(todoList[0]).toHaveTextContent('Todo 1')
-    expect(todoList[1]).toHaveTextContent('Todo 2')
+    expect(todoList).toHaveLength(2)
   })
 })

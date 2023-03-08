@@ -13,7 +13,11 @@ export default async function todosHandler(
   res: NextApiResponse,
 ) {
   if (req.method === 'GET') {
-    const todos = await prisma.todo.findMany()
+    const todos = await prisma.todo.findMany({
+      where: {
+        archived: false,
+      },
+    })
     res.status(200).json(todos)
   }
 

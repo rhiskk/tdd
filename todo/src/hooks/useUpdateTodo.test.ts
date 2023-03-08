@@ -18,4 +18,21 @@ describe('useUpdateTodo', () => {
       archived: false,
     })
   })
+
+  it('should rename a todo', async () => {
+    const { result } = renderHook(useUpdateTodo)
+
+    let updatedTodo = null
+
+    await act(async () => {
+      updatedTodo = await result.current('1', { title: 'Todo 1 Updated' })
+    })
+
+    expect(updatedTodo).toEqual({
+      id: '1',
+      title: 'Todo 1 Updated',
+      completed: true,
+      archived: false,
+    })
+  })
 })

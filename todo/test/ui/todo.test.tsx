@@ -19,8 +19,8 @@ const todoCompleted = {
 describe('Todo', () => {
   it('should render a todo with the correct title', () => {
     render(<Todo todo={todo} />)
-    const todoElement = screen.getByRole('listitem')
-    expect(todoElement).toHaveTextContent('Todo 1')
+    const todoElement = screen.getByRole('textbox')
+    expect(todoElement).toHaveValue('Todo 1')
   })
 
   it('should render a checkbox', () => {
@@ -51,5 +51,21 @@ describe('Todo', () => {
 
     const checkboxAfterClick = await screen.findByRole('checkbox')
     expect(checkboxAfterClick).toBeChecked()
+  })
+
+  it('should rename the todo', async () => {
+    const user = userEvent.setup()
+
+    render(<Todo todo={todo} />)
+    const todoElement = screen.getByRole('textbox')
+    expect(todoElement).toHaveValue('Todo 1')
+
+    const updateButton = screen.getByRole('button')
+
+    await user.type(todoElement, '00')
+    await user.click(updateButton)
+
+    const todoElementAfterTyping = await screen.findByRole('textbox')
+    expect(todoElementAfterTyping).toHaveValue('Todo 100')
   })
 })

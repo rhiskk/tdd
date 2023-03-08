@@ -39,9 +39,11 @@ export const todoHandlers = [
   }),
   rest.put('/api/todo/:id', async (req, res, ctx) => {
     const { id } = req.params
-    const { completed } = await req.json()
+    const { completed, title } = await req.json()
     const todo = todos.find((todo) => todo.id === id)
-    todo!.completed = completed
+    if (!todo) return res(ctx.status(404))
+    if (title) todo.title = title
+    if (completed) todo.completed = completed
     return res(ctx.status(200), ctx.json(todo))
   }),
   rest.patch('/api/todo', async (_req, res, ctx) => {

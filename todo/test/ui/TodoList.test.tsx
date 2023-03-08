@@ -19,8 +19,8 @@ const todos = [
 describe('TodoList', () => {
   it('should render a list of todos', () => {
     render(<TodoList todos={todos} />)
-    const todoList = screen.getAllByRole('listitem')
+    const todoList = screen.getAllByRole('textbox')
     expect(todoList).toHaveLength(2)
-    expect(todoList[0]).toHaveTextContent('Todo 1')
+    expect(todoList[0]).toHaveValue('Todo 1')
   })
 })

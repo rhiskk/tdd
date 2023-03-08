@@ -16,7 +16,7 @@ export const TodoForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form name="todo-form" onSubmit={handleSubmit}>
       <input id="title" type="text" value={title} onChange={onChange} />
       <button type="submit">Add Todo</button>
     </form>
