@@ -34,7 +34,7 @@ export const todoHandlers = [
     todos.push(todo)
     return res(ctx.status(201), ctx.json(todo))
   }),
-  rest.get('/api/todo', async (req, res, ctx) => {
+  rest.get('/api/todo', async (_req, res, ctx) => {
     return res(ctx.status(200), ctx.json(todos))
   }),
   rest.put('/api/todo/:id', async (req, res, ctx) => {
@@ -43,5 +43,10 @@ export const todoHandlers = [
     const todo = todos.find((todo) => todo.id === id)
     todo!.completed = completed
     return res(ctx.status(200), ctx.json(todo))
+  }),
+  rest.patch('/api/todo', async (_req, res, ctx) => {
+    const archivedTodos = todos.filter((todo) => todo.completed)
+    archivedTodos.forEach((todo) => (todo.archived = true))
+    return res(ctx.status(200), ctx.json(archivedTodos))
   }),
 ]

@@ -68,16 +68,27 @@ describe('/api/todo', () => {
         id: '1',
         title: 'Todo test 1',
         completed: true,
+        archived: false,
       },
       {
         id: '2',
         title: 'Todo test 2',
         completed: false,
+        archived: false,
+      },
+    ]
+
+    const archivedTodos = [
+      {
+        id: '1',
+        title: 'Todo test 1',
+        completed: true,
+        archived: true,
       },
     ]
 
     prisma.todo.updateMany = jest.fn().mockResolvedValue(1)
-    prisma.todo.findMany = jest.fn().mockResolvedValue(todos)
+    prisma.todo.findMany = jest.fn().mockResolvedValue(archivedTodos)
 
     const { req, res } = createMocks({
       method: 'PATCH',
@@ -86,7 +97,7 @@ describe('/api/todo', () => {
     await todosHandler(req, res)
 
     expect(res._getStatusCode()).toBe(200)
-    expect(res._getJSONData()).toEqual(todos)
+    expect(res._getJSONData()).toEqual(archivedTodos)
   })
 })
 

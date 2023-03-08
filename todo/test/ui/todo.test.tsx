@@ -48,6 +48,8 @@ describe('Todo', () => {
     const checkbox = screen.getByRole('checkbox')
 
     await user.click(checkbox)
-    expect(checkbox).toBeChecked()
+
+    const checkboxAfterClick = await screen.findByRole('checkbox')
+    expect(checkboxAfterClick).toBeChecked()
   })
 })
