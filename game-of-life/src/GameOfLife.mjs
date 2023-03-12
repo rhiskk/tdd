@@ -66,3 +66,11 @@ export function update(array) {
   const result = removeDeadColumns(removeDeadRows(extendedResult));
   return result;
 }
+
+export function play(array, iterations) {
+  let result = array;
+  for (let i = 0; i < iterations; i++) {
+    result = update(result);
+  }
+  return result;
+}

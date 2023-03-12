@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { blinkerArray, blockArray, gliderArray } from "./testPatterns.mjs";
-import { countNeighbors, update } from "../src/GameOfLife.mjs";
+import { countNeighbors, update, play } from "../src/GameOfLife.mjs";
 
 describe("Game of Life", () => {
   describe("countNeighbors", () => {
@@ -48,6 +48,48 @@ describe("Game of Life", () => {
         [false, true, false]
       ];
       const updated = update(gliderArray);
+      expect(updated).to.deep.equal(expected);
+    });
+
+    it("updates the state of a glider shape", () => {
+      const gen1glider = [
+        [true, false, true],
+        [false, true, true],
+        [false, true, false]
+      ];
+      const expected = [
+        [false, false, true],
+        [true, false, true],
+        [false, true, true]
+      ];
+      const updated = update(gen1glider);
+      expect(updated).to.deep.equal(expected);
+    });
+  });
+
+  describe("play", () => {
+    it("returns the correct state for block after 2 iterations", () => {
+      const updated = play(blockArray, 2);
+      expect(updated).to.deep.equal(blockArray);
+    });
+
+    it("returns the correct state for blinker after 3 iterations", () => {
+      const expected = [
+        [true],
+        [true],
+        [true]
+      ];
+      const updated = play(blinkerArray, 3);
+      expect(updated).to.deep.equal(expected);
+    });
+
+    it("return the correct state for glider after 2 iterations", () => {
+      const expected = [
+        [false, false, true],
+        [true, false, true],
+        [false, true, true]
+      ];
+      const updated = play(gliderArray, 2);
       expect(updated).to.deep.equal(expected);
     });
   });
