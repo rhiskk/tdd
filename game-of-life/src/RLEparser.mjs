@@ -1,5 +1,4 @@
 export function decode(rle) {
-
   const { x, y, pattern } = parseString(rle);
   const array = new Array(y)
     .fill()
@@ -29,6 +28,34 @@ export function decode(rle) {
   }
 
   return array;
+}
+
+export function encode(array) {
+  const x = array[0].length;
+  const y = array.length;
+  let rlePattern = "";
+  for (let i = 0; i < y; i++) {
+    let count = 0;
+    let previous = "";
+    for (let j = 0; j < x; j++) {
+      const current = array[i][j];
+      if (previous === "") {
+        previous = current;
+      }
+      if (current === previous) count++;
+      else {
+        rlePattern += (count > 1 ? count : "") + (previous ? 'o' : 'b');
+        count = 0;
+        previous = current;
+      }
+    }
+    rlePattern += (count > 1 ? count : "")
+      + (previous ? 'o' : 'b')
+      + (i === y - 1 ? "!" : "$");
+  }
+  const expectedRLE = `x = ${x}, y = ${y}, rule = B3/S23
+${rlePattern}`;
+  return expectedRLE;
 }
 
 export function parseString(string) {

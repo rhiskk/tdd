@@ -1,9 +1,9 @@
-import { decode, parseString } from "../src/rleParser.mjs";
+import { decode, encode, parseString } from "../src/rleParser.mjs";
 import { expect } from "chai";
 import { blockArray, blinkerArray, gliderArray } from "./testPatterns.mjs";
 
 describe("RLE parser", () => {
-  it("parses block rle into an array", () => {
+  it("decodes block rle into an array", () => {
     const blockRLE = `#N Block
 #C An extremely common 4-cell still life.
 #C www.conwaylife.com/wiki/index.php?title=Block
@@ -38,7 +38,7 @@ x = 2, y = 2, rule = B3/S23
     expect(pattern).to.equal('3o!');
   });
 
-  it("parses blinker rle into an array", () => {
+  it("decodes blinker rle into an array", () => {
     const blinkerRLE = `#N Blinker
   #O John Conway
   #C A period 2 oscillator that is the smallest and most common oscillator.
@@ -49,7 +49,7 @@ x = 2, y = 2, rule = B3/S23
     expect(resultArray).to.deep.equal(blinkerArray);
   });
 
-  it('parses glider rle into an array', () => {
+  it('decodes glider rle into an array', () => {
     const gliderRLE = `#N Glider
 #O Richard K. Guy
 #C The smallest, most common, and first discovered spaceship. Diagonal, has period 4 and speed c/4.
@@ -58,5 +58,26 @@ x = 3, y = 3, rule = B3/S23
 bob$2bo$3o!`;
     const resultArray = decode(gliderRLE);
     expect(resultArray).to.deep.equal(gliderArray);
+  });
+
+  it('encodes a block array into a block rle', () => {
+    const expectedRLE = `x = 2, y = 2, rule = B3/S23
+2o$2o!`;
+    const resultRLE = encode(blockArray);
+    expect(resultRLE).to.equal(expectedRLE);
+  });
+
+  it('encodes a blinker array into a block rle', () => {
+    const expectedRLE = `x = 3, y = 1, rule = B3/S23
+3o!`;
+    const resultRLE = encode(blinkerArray);
+    expect(resultRLE).to.equal(expectedRLE);
+  });
+
+  it('encodes a glider array into a glider rle', () => {
+    const expectedRLE = `x = 3, y = 3, rule = B3/S23
+bob$2bo$3o!`;
+    const resultRLE = encode(gliderArray);
+    expect(resultRLE).to.equal(expectedRLE);
   });
 });
