@@ -80,4 +80,16 @@ bob$2bo$3o!`;
     const resultRLE = encode(gliderArray);
     expect(resultRLE).to.equal(expectedRLE);
   });
+
+  it('encodes a glider array gen 2 into a glider rle', () => {
+    const gen2glider = [
+      [false, false, true],
+      [true, false, true],
+      [false, true, true]
+    ];
+    const expectedRLE = `x = 3, y = 3, rule = B3/S23
+2bo$obo$b2o!`;
+    const resultRLE = encode(gen2glider);
+    expect(resultRLE).to.equal(expectedRLE);
+  });
 });

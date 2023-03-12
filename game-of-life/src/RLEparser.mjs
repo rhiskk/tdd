@@ -45,7 +45,7 @@ export function encode(array) {
       if (current === previous) count++;
       else {
         rlePattern += (count > 1 ? count : "") + (previous ? 'o' : 'b');
-        count = 0;
+        count = 1;
         previous = current;
       }
     }
@@ -53,9 +53,9 @@ export function encode(array) {
       + (previous ? 'o' : 'b')
       + (i === y - 1 ? "!" : "$");
   }
-  const expectedRLE = `x = ${x}, y = ${y}, rule = B3/S23
+  const rle = `x = ${x}, y = ${y}, rule = B3/S23
 ${rlePattern}`;
-  return expectedRLE;
+  return rle;
 }
 
 export function parseString(string) {
